@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": ""
+    "dev": "nodemon --exec node server.ts"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/pjj186/instaclone-backend/issues"
   },
-  "homepage": "https://github.com/pjj186/instaclone-backend#readme"
+  "homepage": "https://github.com/pjj186/instaclone-backend#readme",
+  "dependencies": {
+    "apollo-server": "^2.25.2",
+    "graphql": "^15.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
