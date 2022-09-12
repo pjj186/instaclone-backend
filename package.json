@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec node server.ts"
+    "dev": "nodemon --exec babel-node server"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,9 @@
     "graphql": "^15.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.19.0",
+    "@babel/node": "^7.18.10",
+    "@babel/preset-env": "^7.19.0",
     "nodemon": "^2.0.19"
   }
 }
