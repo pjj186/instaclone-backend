@@ -28,11 +28,11 @@ const resolvers = {
     }),
   },
   Mutation: {
-    createMovie: (_, args) => {
+    createMovie: (_: any, args: any) => {
       console.log(args);
       return true;
     },
-    deleteMovie: (_, args) => {
+    deleteMovie: (_: any, args: any) => {
       console.log(args);
       return true;
     },
