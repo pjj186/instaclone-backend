@@ -3,6 +3,7 @@ import { ApolloServer, gql } from "apollo-server";
 // The GraphQL schema
 const typeDefs = gql`
   type Movie {
+    id: Int
     title: String
     year: Int
   }
