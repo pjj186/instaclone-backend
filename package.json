@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --ext 'ts,json' --exec ts-node server"
+    "dev": "nodemon --ext 'ts,json' --exec ts-node server",
+    "migrate": "npx prisma migrate dev"
   },
   "repository": {
     "type": "git",
