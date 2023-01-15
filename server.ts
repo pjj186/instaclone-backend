@@ -3,7 +3,8 @@ import { ApolloServer, gql } from "apollo-server";
 
 const client = new PrismaClient();
 
-interface ICreateMovieData {
+interface IMovieData {
+  id: number;
   title: string;
   year: number;
   genre?: string;
@@ -27,7 +28,8 @@ const typeDefs = gql`
   # 뮤테이션
   type Mutation {
     createMovie(title: String!, year: Int!, genre: String): Movie
-    deleteMovie(id: Int!): Boolean
+    deleteMovie(id: Int!): Movie
+    updateMovie(id: Int!, year: Int!): Movie
   }
 `;
 
@@ -35,13 +37,15 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     movies: () => client.movie.findMany(),
-    movie: (_: any, { id }: any) => ({
-      title: "Iron Man",
-      year: 2004,
-    }),
+    movie: (_: any, { id }: any) =>
+      client.movie.findUnique({
+        where: {
+          id,
+        },
+      }),
   },
   Mutation: {
-    createMovie: (_: any, { title, year, genre }: ICreateMovieData) =>
+    createMovie: (_: any, { title, year, genre }: IMovieData) =>
       client.movie.create({
         data: {
           title,
@@ -49,10 +53,21 @@ const resolvers = {
           genre,
         },
       }),
-    deleteMovie: (_: any, { id }: any) => {
-      console.log(id);
-      return true;
-    },
+    deleteMovie: (_: any, { id }: IMovieData) =>
+      client.movie.delete({
+        where: {
+          id,
+        },
+      }),
+    updateMovie: (_: any, { id, year }: IMovieData) =>
+      client.movie.update({
+        where: {
+          id,
+        },
+        data: {
+          year,
+        },
+      }),
   },
 };
 
