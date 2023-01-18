@@ -1,5 +1,5 @@
-import client from "../client";
-import { IAccount } from "./users.types";
+import client from "../../client";
+import { IAccount } from "../users.types";
 
 export default {
   Query: {

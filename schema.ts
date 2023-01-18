@@ -4,9 +4,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 
 // Pattern Language, Glob
 const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.ts`);
-const loadedResolvers = loadFilesSync(
-  `${__dirname}/**/*.{queries,mutations}.ts`
-);
+const loadedResolvers = loadFilesSync(`${__dirname}/**/*.resolver.ts`);
 
 const typeDefs = mergeTypeDefs(loadedTypes);
 const resolvers = mergeResolvers(loadedResolvers);
