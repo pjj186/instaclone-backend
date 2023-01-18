@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import client from "../client";
+import jwt from "jsonwebtoken";
 import { IAccount } from "./users.types";
 
 export default {
@@ -38,6 +39,7 @@ export default {
         return e;
       }
     },
+
     login: async (_: any, { username, password }: IAccount) => {
       const user = await client.user.findFirst({
         where: {
@@ -57,6 +59,14 @@ export default {
           error: "Incorrect password",
         };
       }
+      const token = await jwt.sign(
+        { id: user.id },
+        process.env.JWT_SECRET_KEY!
+      );
+      return {
+        ok: true,
+        token,
+      };
     },
   },
 };
