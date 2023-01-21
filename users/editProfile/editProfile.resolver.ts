@@ -1,20 +1,24 @@
 import client from "../../client";
 import { IAccount } from "../users.types";
 import bcrypt from "bcrypt";
+import { IContext } from "../../server";
 
 export default {
   Mutation: {
     editProfile: async (
       _: any,
-      { firstName, username, lastName, email, password: newPassword }: IAccount
+      { firstName, username, lastName, email, password: newPassword }: IAccount,
+      { loggedInUser }: IContext
     ) => {
+      console.log(loggedInUser);
+
       let uglyPassword = null;
       if (newPassword) {
         uglyPassword = await bcrypt.hash(newPassword, 10);
       }
       const updatedUser = await client.user.update({
         where: {
-          id: 1,
+          id: loggedInUser.id,
         },
         data: {
           firstName,
