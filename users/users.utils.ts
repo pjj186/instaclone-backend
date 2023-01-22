@@ -1,5 +1,8 @@
+import { User } from "@prisma/client";
+import { ResolverFn, ResolveType } from "apollo-server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import client from "../client";
+
 export const getUser = async (token: string) => {
   try {
     if (!token) {
@@ -20,3 +23,14 @@ export const getUser = async (token: string) => {
     return null;
   }
 };
+
+export const protectedResolver =
+  (ourResolver: any) => (root: any, args: any, context: any, info: any) => {
+    if (!context.loggedInUser) {
+      return {
+        ok: false,
+        error: "로그인이 필요합니다.",
+      };
+    }
+    return ourResolver(root, args, context, info);
+  };

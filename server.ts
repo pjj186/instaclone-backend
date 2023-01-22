@@ -8,6 +8,7 @@ import { User } from "@prisma/client";
 
 export interface IContext {
   loggedInUser: User;
+  protectResolver: (user: User) => { ok: boolean; error: string };
 }
 
 const PORT = process.env.PORT;
@@ -15,7 +16,9 @@ const PORT = process.env.PORT;
 const server = new ApolloServer({
   schema,
   context: async ({ req }: ExpressContext) => {
-    return { loggedInUser: await getUser(req?.headers?.authorization!) };
+    return {
+      loggedInUser: await getUser(req?.headers?.authorization!),
+    };
   },
 });
 
