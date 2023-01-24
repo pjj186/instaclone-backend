@@ -1,5 +1,3 @@
-import { User } from "@prisma/client";
-import { ResolverFn, ResolveType } from "apollo-server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import client from "../client";
 
