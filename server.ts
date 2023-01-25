@@ -15,34 +15,19 @@ export interface IContext {
 
 const PORT = process.env.PORT;
 
-const startServer = async () => {
-  const { default: graphqlUploadExpress } = await import(
-    "graphql-upload/graphqlUploadExpress.mjs"
-  );
-
-  const server = new ApolloServer({
-    resolvers,
-    typeDefs,
-    context: async ({ req }: ExpressContext) => {
-      return {
-        loggedInUser: await getUser(req?.headers?.authorization!),
-      };
-    },
-  });
-
-  const app = express(); // create express server
-  await server.start();
-
-  app.use(logger("tiny"));
-  app.use(graphqlUploadExpress());
-  app.use("/static", express.static("uploads"));
-  server.applyMiddleware({ app }); // apollo server with express server
-
-  app.listen({ port: PORT }, () => {
-    console.log(
-      `🚀 Server ready at http://localhost:${PORT}/${server.graphqlPath}`
-    );
-  });
-};
-
-startServer();
+const apollo = new ApolloServer({
+  resolvers,
+  typeDefs,
+  context: async ({ req }: ExpressContext) => {
+    return {
+      loggedInUser: await getUser(req.headers.authorization!),
+    };
+  },
+});
+const app = express();
+app.use(logger("tiny"));
+app.use("/static", express.static("uploads"));
+apollo.applyMiddleware({ app });
+app.listen({ port: PORT }, () => {
+  console.log(`🚀Server is running on http://localhost:${PORT} ✅`);
+});

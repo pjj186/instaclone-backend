@@ -18,7 +18,9 @@ const resolverFn = async (
   }: IAccount,
   { loggedInUser }: IContext
 ) => {
-  const { filename, createReadStream } = await (<FileUpload>avatar);
+  const { filename, mimetype, encoding, createReadStream } = await (<
+    FileUpload
+  >avatar);
   const readStream = createReadStream();
   const writeStream = fs.createWriteStream(
     process.cwd() + "/uploads/" + filename
