@@ -1,4 +1,5 @@
 import client from "../../client";
+import errorMessages from "../../error-messages";
 import { IContext } from "../../server";
 import { IAccount } from "../users.types";
 import { protectedResolver } from "../users.utils";
@@ -12,11 +13,14 @@ const resolverFn = async (
     where: {
       username,
     },
+    select: {
+      id: true,
+    },
   });
   if (!ok) {
     return {
       ok: false,
-      error: "존재하지 않는 유저입니다.",
+      error: errorMessages.UserNotFound,
     };
   }
   await client.user.update({
