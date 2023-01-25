@@ -25,6 +25,7 @@ const apollo = new ApolloServer({
   },
 });
 const app = express();
+
 app.use(logger("tiny"));
 app.use("/static", express.static("uploads"));
 apollo.applyMiddleware({ app });

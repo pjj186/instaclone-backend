@@ -18,15 +18,17 @@ const resolverFn = async (
   }: IAccount,
   { loggedInUser }: IContext
 ) => {
-  const { filename, mimetype, encoding, createReadStream } = await (<
-    FileUpload
-  >avatar);
-  const readStream = createReadStream();
-  const writeStream = fs.createWriteStream(
-    process.cwd() + "/uploads/" + filename
-  ); // cwd: current working directory
-
-  readStream.pipe(writeStream); // pipe : stream 연결
+  const { filename, createReadStream } = await (<FileUpload>avatar);
+  let avatarUrl = null;
+  if (avatar) {
+    const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+    const readStream = createReadStream();
+    const writeStream = fs.createWriteStream(
+      process.cwd() + "/uploads/" + newFilename
+    ); // cwd: current working directory
+    readStream.pipe(writeStream); // pipe : stream 연결
+    avatarUrl = `http://localhost:4000/static/${newFilename}`;
+  }
 
   let uglyPassword = null;
   if (newPassword) {
@@ -43,6 +45,7 @@ const resolverFn = async (
       email,
       bio,
       ...(uglyPassword && { password: uglyPassword }),
+      ...(avatarUrl && { avatar: avatarUrl }),
     },
   });
   if (updatedUser.id) {
