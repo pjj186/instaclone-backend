@@ -26,7 +26,6 @@ const resolverFn = async (
 
   readStream.pipe(writeStream); // pipe : stream 연결
 
-  console.log("File Upload!");
   let uglyPassword = null;
   if (newPassword) {
     uglyPassword = await bcrypt.hash(newPassword, 10);

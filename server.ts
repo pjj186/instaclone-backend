@@ -4,7 +4,7 @@ dotenv.config();
 import { typeDefs, resolvers } from "./schema";
 import { ExpressContext } from "apollo-server-express/src/ApolloServer";
 import { getUser } from "./users/users.utils";
-import { User } from "@prisma/client";
+import { User } from ".prisma/client";
 import logger from "morgan";
 import express from "express";
 
@@ -16,6 +16,10 @@ export interface IContext {
 const PORT = process.env.PORT;
 
 const startServer = async () => {
+  const { default: graphqlUploadExpress } = await import(
+    "graphql-upload/graphqlUploadExpress.mjs"
+  );
+
   const server = new ApolloServer({
     resolvers,
     typeDefs,
@@ -27,12 +31,17 @@ const startServer = async () => {
   });
 
   const app = express(); // create express server
-  app.use(logger("tiny"));
   await server.start();
+
+  app.use(logger("tiny"));
+  app.use(graphqlUploadExpress());
+  app.use("/static", express.static("uploads"));
   server.applyMiddleware({ app }); // apollo server with express server
 
   app.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
+    console.log(
+      `🚀 Server ready at http://localhost:${PORT}/${server.graphqlPath}`
+    );
   });
 };
 
