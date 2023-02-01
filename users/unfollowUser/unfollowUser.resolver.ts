@@ -1,12 +1,13 @@
 import client from "../../client";
 import errorMessages from "../../error-messages";
 import { IContext } from "../../server";
-import { IAccount } from "../users.types";
+import { IUser } from "../users.types";
+
 import { protectedResolver } from "../users.utils";
 
 const resolverFn = async (
   _: any,
-  { username }: IAccount,
+  { username }: IUser,
   { loggedInUser }: IContext
 ) => {
   const ok = await client.user.findUnique({

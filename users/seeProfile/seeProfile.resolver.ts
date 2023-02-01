@@ -1,9 +1,9 @@
 import client from "../../client";
-import { IAccount } from "../users.types";
+import { IUser } from "../users.types";
 
 export default {
   Query: {
-    seeProfile: async (_: any, { username }: IAccount) => {
+    seeProfile: async (_: any, { username }: IUser) => {
       return client.user.findUnique({
         where: {
           username,

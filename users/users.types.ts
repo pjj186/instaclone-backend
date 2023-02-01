@@ -1,15 +1,21 @@
+import { User } from "@prisma/client";
 import { ReadStream } from "fs-capacitor";
 
-export interface IAccount {
+export interface IUser {
   id: number;
   firstName: string;
-  lastName?: string;
+  lastName: string;
   username: string;
-  email: string;
   password: string;
-  token: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
   bio?: string;
-  avatar?: FileUpload;
+  avatar?: string | FileUpload;
+  following: User[];
+  followers: User[];
+  totalFollowing: number;
+  totalFollowers: number;
 }
 
 export interface FileUpload {

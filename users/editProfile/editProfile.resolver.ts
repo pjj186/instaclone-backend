@@ -1,6 +1,6 @@
 import fs from "fs";
 import client from "../../client";
-import { FileUpload, IAccount } from "../users.types";
+import { FileUpload, IUser } from "../users.types";
 import bcrypt from "bcrypt";
 import { IContext } from "../../server";
 import { protectedResolver } from "../users.utils";
@@ -15,7 +15,7 @@ const resolverFn = async (
     password: newPassword,
     bio,
     avatar,
-  }: IAccount,
+  }: IUser,
   { loggedInUser }: IContext
 ) => {
   const { filename, createReadStream } = await (<FileUpload>avatar);
