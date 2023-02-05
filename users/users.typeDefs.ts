@@ -16,6 +16,7 @@ export interface IUser {
   totalFollowing: number;
   totalFollowers: number;
   isMe: boolean;
+  isFollowing: boolean;
 }
 
 export default gql`
@@ -34,8 +35,6 @@ export default gql`
     totalFollowing: Int!
     totalFollowers: Int!
     isMe: Boolean!
+    isFollowing: Boolean!
   }
 `;
-
-//  isFollowing: Boolean!
-//  isMe: Boolean!

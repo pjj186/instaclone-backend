@@ -34,5 +34,21 @@ export default {
       }
       return id === loggedInUser.id;
     },
+    isFollowing: async ({ id }: IUser, _: any, { loggedInUser }: IContext) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      const exists = await client.user.count({
+        where: {
+          username: loggedInUser.username,
+          following: {
+            some: {
+              id,
+            },
+          },
+        },
+      });
+      return Boolean(exists); // 0 or 1
+    },
   },
 };
