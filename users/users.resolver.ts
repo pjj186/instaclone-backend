@@ -1,11 +1,38 @@
+import client from "../client";
+import { IContext } from "../server";
 import { IUser } from "./users.typeDefs";
 
 export default {
   User: {
-    totalFollowing: (root: IUser) => {
-      console.log(root.username);
-      return 666;
+    // 내 id를 자신의 팔로우 리스트에 가지고 있는 사람들의 수
+    totalFollowing: ({ id }: IUser) => {
+      return client.user.count({
+        where: {
+          followers: {
+            some: {
+              id,
+            },
+          },
+        },
+      });
     },
-    totalFollowers: () => 999,
+    // 내 id를 팔로잉 하고 있는 사람들의 수
+    totalFollowers: ({ id }: IUser) => {
+      return client.user.count({
+        where: {
+          following: {
+            some: {
+              id,
+            },
+          },
+        },
+      });
+    },
+    isMe: ({ id }: IUser, _: any, { loggedInUser }: IContext) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      return id === loggedInUser.id;
+    },
   },
 };

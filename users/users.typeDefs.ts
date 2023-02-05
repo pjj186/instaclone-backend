@@ -15,6 +15,7 @@ export interface IUser {
   followers: User[];
   totalFollowing: number;
   totalFollowers: number;
+  isMe: boolean;
 }
 
 export default gql`
@@ -32,6 +33,7 @@ export default gql`
     followers: [User]
     totalFollowing: Int!
     totalFollowers: Int!
+    isMe: Boolean!
   }
 `;
 
