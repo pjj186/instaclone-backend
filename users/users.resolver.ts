@@ -1,11 +1,10 @@
-import client from "../client";
-import { IContext } from "../server";
+import { Context } from "./types";
 import { IUser } from "./users.typeDefs";
 
 export default {
   User: {
     // 내 id를 자신의 팔로우 리스트에 가지고 있는 사람들의 수
-    totalFollowing: ({ id }: IUser) => {
+    totalFollowing: ({ id }: IUser, _: any, { client }: Context) => {
       return client.user.count({
         where: {
           followers: {
@@ -17,7 +16,7 @@ export default {
       });
     },
     // 내 id를 팔로잉 하고 있는 사람들의 수
-    totalFollowers: ({ id }: IUser) => {
+    totalFollowers: ({ id }: IUser, _: any, { client }: Context) => {
       return client.user.count({
         where: {
           following: {
@@ -28,13 +27,17 @@ export default {
         },
       });
     },
-    isMe: ({ id }: IUser, _: any, { loggedInUser }: IContext) => {
+    isMe: ({ id }: IUser, _: any, { loggedInUser }: Context) => {
       if (!loggedInUser) {
         return false;
       }
       return id === loggedInUser.id;
     },
-    isFollowing: async ({ id }: IUser, _: any, { loggedInUser }: IContext) => {
+    isFollowing: async (
+      { id }: IUser,
+      _: any,
+      { loggedInUser, client }: Context
+    ) => {
       if (!loggedInUser) {
         return false;
       }

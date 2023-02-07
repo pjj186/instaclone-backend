@@ -1,12 +1,16 @@
-import client from "../../client";
 import errorMessages from "../../error-messages";
+import { Context } from "../types";
 
 interface ISeeFollowersParams {
   username: string;
   page: number;
 }
 
-const resolverFn = async (_: any, { username, page }: ISeeFollowersParams) => {
+const resolverFn = async (
+  _: any,
+  { username, page }: ISeeFollowersParams,
+  { client }: Context
+) => {
   const ok = await client.user.findUnique({
     where: {
       username,

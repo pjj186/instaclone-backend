@@ -1,11 +1,14 @@
-import client from "../../client";
-
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Context } from "../types";
 import { IUser } from "../users.types";
 export default {
   Mutation: {
-    login: async (_: any, { username, password }: IUser) => {
+    login: async (
+      _: any,
+      { username, password }: IUser,
+      { client }: Context
+    ) => {
       const user = await client.user.findFirst({
         where: {
           username,

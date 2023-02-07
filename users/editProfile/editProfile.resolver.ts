@@ -1,9 +1,8 @@
 import fs from "fs";
-import client from "../../client";
 import { FileUpload, IUser } from "../users.types";
 import bcrypt from "bcrypt";
-import { IContext } from "../../server";
 import { protectedResolver } from "../users.utils";
+import { Context } from "../types";
 
 const resolverFn = async (
   _: any,
@@ -16,12 +15,12 @@ const resolverFn = async (
     bio,
     avatar,
   }: IUser,
-  { loggedInUser }: IContext
+  { loggedInUser, client }: Context
 ) => {
   const { filename, createReadStream } = await (<FileUpload>avatar);
   let avatarUrl = null;
   if (avatar) {
-    const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+    const newFilename = `${loggedInUser?.id}-${Date.now()}-${filename}`;
     const readStream = createReadStream();
     const writeStream = fs.createWriteStream(
       process.cwd() + "/uploads/" + newFilename
@@ -36,7 +35,7 @@ const resolverFn = async (
   }
   const updatedUser = await client.user.update({
     where: {
-      id: loggedInUser.id,
+      id: loggedInUser?.id,
     },
     data: {
       firstName,

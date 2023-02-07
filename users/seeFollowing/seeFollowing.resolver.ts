@@ -1,5 +1,5 @@
-import client from "../../client";
 import errorMessages from "../../error-messages";
+import { Context } from "../types";
 
 interface ISeeFollowingParams {
   username: string;
@@ -8,7 +8,8 @@ interface ISeeFollowingParams {
 
 const resolverFn = async (
   _: any,
-  { username, lastId }: ISeeFollowingParams
+  { username, lastId }: ISeeFollowingParams,
+  { client }: Context
 ) => {
   const ok = await client.user.findUnique({
     where: {

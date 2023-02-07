@@ -1,4 +1,4 @@
-import client from "../../client";
+import { Context } from "../types";
 
 interface ISearchParam {
   keyword: string;
@@ -6,7 +6,11 @@ interface ISearchParam {
 }
 
 // TODO : Pagination 구현
-const resolverFn = async (_: any, { keyword, page }: ISearchParam) => {
+const resolverFn = async (
+  _: any,
+  { keyword, page }: ISearchParam,
+  { client }: Context
+) => {
   const users = await client.user.findMany({
     where: {
       username: {

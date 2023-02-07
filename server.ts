@@ -4,14 +4,9 @@ dotenv.config();
 import { typeDefs, resolvers } from "./schema";
 import { ExpressContext } from "apollo-server-express/src/ApolloServer";
 import { getUser } from "./users/users.utils";
-import { User } from ".prisma/client";
 import logger from "morgan";
 import express from "express";
-
-export interface IContext {
-  loggedInUser: User;
-  protectResolver: (user: User) => { ok: boolean; error: string };
-}
+import client from "./client";
 
 const PORT = process.env.PORT;
 
@@ -21,6 +16,7 @@ const apollo = new ApolloServer({
   context: async ({ req }: ExpressContext) => {
     return {
       loggedInUser: await getUser(req.headers.authorization!),
+      client: client,
     };
   },
 });

@@ -1,14 +1,12 @@
-import client from "../../client";
 import errorMessages from "../../error-messages";
-import { IContext } from "../../server";
+import { Context } from "../types";
 import { IUser } from "../users.types";
-
 import { protectedResolver } from "../users.utils";
 
 const resolverFn = async (
   _: any,
   { username }: IUser,
-  { loggedInUser }: IContext
+  { loggedInUser, client }: Context
 ) => {
   const ok = await client.user.findUnique({
     where: { username },
@@ -24,7 +22,7 @@ const resolverFn = async (
   }
   await client.user.update({
     where: {
-      id: loggedInUser.id,
+      id: loggedInUser?.id,
     },
     data: {
       following: {

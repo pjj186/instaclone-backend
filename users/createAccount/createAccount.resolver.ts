@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
-import client from "../../client";
+import { Context } from "../types";
 import { IUser } from "../users.types";
 
 export default {
   Mutation: {
     createAccount: async (
       _: any,
-      { firstName, lastName, username, email, password }: IUser
+      { firstName, lastName, username, email, password }: IUser,
+      { client }: Context
     ) => {
       try {
         const existingUser = await client.user.findFirst({
