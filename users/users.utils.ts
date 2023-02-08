@@ -1,3 +1,4 @@
+import { GraphQLResolveInfo } from "graphql";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import client from "../client";
 import { Context } from "./types";
@@ -24,12 +25,18 @@ export const getUser = async (token: string) => {
 };
 
 export const protectedResolver =
-  (ourResolver: any) => (root: any, args: any, context: Context, info: any) => {
+  (ourResolver: any) =>
+  (root: any, args: any, context: Context, info: GraphQLResolveInfo) => {
     if (!context.loggedInUser) {
-      return {
-        ok: false,
-        error: "로그인이 필요합니다.",
-      };
+      const query = info.operation.operation === "query";
+      if (query) {
+        return null;
+      } else {
+        return {
+          ok: false,
+          error: "로그인이 필요합니다.",
+        };
+      }
     }
     return ourResolver(root, args, context, info);
   };
