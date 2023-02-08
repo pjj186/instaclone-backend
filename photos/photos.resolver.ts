@@ -25,6 +25,12 @@ export default {
           photoId: id,
         },
       }),
+    comments: ({ id }: Photo) =>
+      client.comment.count({
+        where: {
+          photoId: id,
+        },
+      }),
   },
   Hashtag: {
     photos: ({ id }: Hashtag, { page }: HashtagQueryPhotosArgs) => {
