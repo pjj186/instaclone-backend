@@ -19,6 +19,12 @@ export default {
           },
         },
       }),
+    likes: ({ id }: Photo) =>
+      client.like.count({
+        where: {
+          photoId: id,
+        },
+      }),
   },
   Hashtag: {
     photos: ({ id }: Hashtag, { page }: HashtagQueryPhotosArgs) => {
@@ -28,7 +34,7 @@ export default {
             id,
           },
         })
-        .photos({ take: 5, skip: (page - 1) * 4 });
+        .photos({ take: 5, skip: (page - 1) * 5 });
     },
     totalPhotos: ({ id }: Hashtag) =>
       client.photo.count({
