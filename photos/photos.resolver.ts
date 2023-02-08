@@ -28,7 +28,7 @@ export default {
             id,
           },
         })
-        .photos();
+        .photos({ take: 5, skip: (page - 1) * 4 });
     },
     totalPhotos: ({ id }: Hashtag) =>
       client.photo.count({
