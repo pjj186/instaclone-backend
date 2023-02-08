@@ -1,5 +1,6 @@
 import { Hashtag, Photo } from "@prisma/client";
 import client from "../client";
+import { Context } from "../users/types";
 
 interface HashtagQueryPhotosArgs {
   page: number;
@@ -31,6 +32,13 @@ export default {
           photoId: id,
         },
       }),
+    isMine: ({ userId }: Photo, _: any, { loggedInUser }: Context) => {
+      if (!loggedInUser) {
+        return false;
+      } else {
+        return userId === loggedInUser?.id;
+      }
+    },
   },
   Hashtag: {
     photos: ({ id }: Hashtag, { page }: HashtagQueryPhotosArgs) => {
