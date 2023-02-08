@@ -3,10 +3,10 @@ import { gql } from "apollo-server";
 export default gql`
   type Photo {
     id: Int!
-    user: User!
+    user: User! # need resolver
     file: String!
     caption: String
-    hashtags: [Hashtag]
+    hashtags: [Hashtag] # need resolver
     createdAt: String!
     updatedAt: String!
   }
@@ -14,7 +14,8 @@ export default gql`
   type Hashtag {
     id: Int!
     hashtag: String!
-    photos: [Photo]
+    photos(page: Int!): [Photo] # need resolver
+    totalPhotos: Int! # need resolver
     createdAt: String!
     updatedAt: String!
   }
