@@ -1,6 +1,7 @@
 import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
+import { processHashtags } from "../photos.utils";
 
 interface IPhotoParams {
   file: any;
@@ -17,11 +18,7 @@ export default {
       ) => {
         let hashtagObjs: any = [];
         if (caption) {
-          const hashtags = caption.match(/#[\w]+/g);
-          hashtagObjs = hashtags?.map((hashtag) => ({
-            where: { hashtag },
-            create: { hashtag },
-          }));
+          hashtagObjs = processHashtags(caption);
         }
         return client.photo.create({
           data: {

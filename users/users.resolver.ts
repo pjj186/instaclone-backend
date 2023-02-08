@@ -1,3 +1,4 @@
+import client from "../client";
 import { Context } from "./types";
 import { IUser } from "./users.typeDefs";
 
@@ -53,5 +54,11 @@ export default {
       });
       return Boolean(exists); // 0 or 1
     },
+    photos: ({ id }: IUser) =>
+      client.user
+        .findUnique({
+          where: { id },
+        })
+        .photos(),
   },
 };
