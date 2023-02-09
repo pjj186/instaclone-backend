@@ -12,11 +12,8 @@ AWS.config.update({
 export const uploadPhoto = async (file: FileUpload, userId: number) => {
   const { filename, createReadStream } = await file;
   const readStream = await createReadStream();
-  console.log(readStream);
-  console.log(readStream.path);
   const objectName = `${userId}-${Date.now()}-${filename}`;
-  console.log(objectName);
-  const upload = await new AWS.S3()
+  const { Location } = await new AWS.S3()
     .upload({
       Bucket: "instaclone-uploads-bk", // Bucket Name
       Key: objectName, // Upload File Name
@@ -24,5 +21,6 @@ export const uploadPhoto = async (file: FileUpload, userId: number) => {
       Body: fs.createReadStream(readStream._writeStream.path),
     })
     .promise();
-  return "";
+
+  return Location;
 };

@@ -18,8 +18,14 @@ export interface IUser {
   totalFollowers: number;
 }
 
+interface ExtendedReadStream extends ReadStream {
+  _writeStream: {
+    path: string;
+  };
+}
+
 export interface FileUpload {
-  createReadStream(): any;
+  createReadStream(): ExtendedReadStream;
   filename: string;
   mimetype: string;
   encoding: string;
