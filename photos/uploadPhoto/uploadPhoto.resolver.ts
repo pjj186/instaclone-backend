@@ -1,10 +1,12 @@
 import client from "../../client";
+import { uploadToS3 } from "../../shared/shared.utils";
 import { Context } from "../../users/types";
+import { FileUpload } from "../../users/users.types";
 import { protectedResolver } from "../../users/users.utils";
 import { processHashtags } from "../photos.utils";
 
 interface IPhotoParams {
-  file: any;
+  file: FileUpload;
   caption: string;
 }
 
@@ -20,9 +22,10 @@ export default {
         if (caption) {
           hashtagObjs = processHashtags(caption);
         }
+        const fileUrl = await uploadToS3(file, loggedInUser?.id!, "uploads");
         return client.photo.create({
           data: {
-            file,
+            file: fileUrl,
             caption,
             user: {
               connect: {

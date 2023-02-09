@@ -9,10 +9,14 @@ AWS.config.update({
   },
 });
 
-export const uploadPhoto = async (file: FileUpload, userId: number) => {
+export const uploadToS3 = async (
+  file: FileUpload,
+  userId: number,
+  folderName: string
+) => {
   const { filename, createReadStream } = await file;
   const readStream = await createReadStream();
-  const objectName = `${userId}-${Date.now()}-${filename}`;
+  const objectName = `${folderName}/${userId}-${Date.now()}-${filename}`;
   const { Location } = await new AWS.S3()
     .upload({
       Bucket: "instaclone-uploads-bk", // Bucket Name
