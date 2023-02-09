@@ -3,6 +3,7 @@ import { FileUpload, IUser } from "../users.types";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
 import { Context } from "../types";
+import { uploadPhoto } from "../../shared/shared.utils";
 
 const resolverFn = async (
   _: any,
@@ -17,16 +18,16 @@ const resolverFn = async (
   }: IUser,
   { loggedInUser, client }: Context
 ) => {
-  const { filename, createReadStream } = await (<FileUpload>avatar);
   let avatarUrl = null;
   if (avatar) {
-    const newFilename = `${loggedInUser?.id}-${Date.now()}-${filename}`;
-    const readStream = createReadStream();
-    const writeStream = fs.createWriteStream(
-      process.cwd() + "/uploads/" + newFilename
-    ); // cwd: current working directory
-    readStream.pipe(writeStream); // pipe : stream 연결
-    avatarUrl = `http://localhost:4000/static/${newFilename}`;
+    avatarUrl = await uploadPhoto(<FileUpload>avatar, loggedInUser?.id!);
+    // const newFilename = `${loggedInUser?.id}-${Date.now()}-${filename}`;
+    // const readStream = createReadStream();
+    // const writeStream = fs.createWriteStream(
+    //   process.cwd() + "/uploads/" + newFilename
+    // ); // cwd: current working directory
+    // readStream.pipe(writeStream); // pipe : stream 연결
+    // avatarUrl = `http://localhost:4000/static/${newFilename}`;
   }
 
   let uglyPassword = null;
