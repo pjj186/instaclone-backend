@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { ReadStream } from "fs-capacitor";
+import { ReadStream, WriteStream } from "fs";
 
 export interface IUser {
   id: number;
@@ -19,9 +19,7 @@ export interface IUser {
 }
 
 interface ExtendedReadStream extends ReadStream {
-  _writeStream: {
-    path: string;
-  };
+  _writeStream: WriteStream;
 }
 
 export interface FileUpload {
