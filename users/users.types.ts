@@ -19,7 +19,7 @@ export interface IUser {
 }
 
 export interface FileUpload {
-  createReadStream(): ReadStream;
+  createReadStream(): any;
   filename: string;
   mimetype: string;
   encoding: string;
