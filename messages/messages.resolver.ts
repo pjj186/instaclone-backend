@@ -17,5 +17,6 @@ export default {
           roomId: id,
         },
       }),
+    unreadTotal: () => 0,
   },
 };
