@@ -7,8 +7,11 @@ import { getUser } from "./users/users.utils";
 import logger from "morgan";
 import express from "express";
 import client from "./client";
+import pubsub from "./pubsub";
 
 const PORT = process.env.PORT;
+
+console.log(pubsub);
 
 const apollo = new ApolloServer({
   resolvers,
@@ -21,11 +24,12 @@ const apollo = new ApolloServer({
     };
   },
 });
-const app = express();
 
+const app = express();
 app.use(logger("tiny"));
 app.use("/static", express.static("uploads"));
 apollo.applyMiddleware({ app });
+apollo.installSubscriptionHandlers(app as any);
 app.listen({ port: PORT }, () => {
   console.log(`🚀Server is running on http://localhost:${PORT} ✅`);
 });
