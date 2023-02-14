@@ -9,19 +9,38 @@ import logger from "morgan";
 import express from "express";
 import client from "./client";
 
+interface IHTTPHeaders {
+  authorization?: string;
+}
+
 const PORT = process.env.PORT;
 
 const apollo = new ApolloServer({
   resolvers,
   typeDefs,
-
-  context: async ({ req }: ExpressContext) => {
-    if (req) {
+  context: async (ctx: ExpressContext) => {
+    if (ctx.req) {
       return {
-        loggedInUser: await getUser(req.headers.authorization!),
+        loggedInUser: await getUser(ctx.req.headers.authorization!),
         client: client,
       };
+    } else {
+      const { context }: any = ctx.connection;
+      return {
+        loggedInUser: context.loggedInUser,
+      };
     }
+  },
+  subscriptions: {
+    onConnect: async ({ authorization }: IHTTPHeaders) => {
+      if (!authorization) {
+        throw new Error("You can't listen.");
+      }
+      const loggedInUser = await getUser(authorization);
+      return {
+        loggedInUser,
+      };
+    },
   },
 });
 
