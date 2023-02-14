@@ -66,8 +66,9 @@ export default {
               });
               if (!room) {
                 result = false;
+              } else {
+                result = true;
               }
-              result = true;
             }
             return result;
           }
