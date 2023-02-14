@@ -1,5 +1,6 @@
 import { Room } from "@prisma/client";
 import client from "../client";
+import { Context } from "../users/types";
 
 export default {
   Room: {
@@ -17,6 +18,21 @@ export default {
           roomId: id,
         },
       }),
-    unreadTotal: () => 0,
+    unreadTotal: ({ id }: Room, _: any, { loggedInUser }: Context) => {
+      if (!loggedInUser) {
+        return 0;
+      }
+      return client.message.count({
+        where: {
+          read: false,
+          roomId: id,
+          user: {
+            id: {
+              not: loggedInUser?.id,
+            },
+          },
+        },
+      });
+    },
   },
 };
