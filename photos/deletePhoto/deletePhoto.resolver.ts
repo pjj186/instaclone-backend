@@ -2,14 +2,14 @@ import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 
-interface deletePhotoParams {
+interface deletePhotoArgs {
   id: number;
 }
 
 export default {
   Mutation: {
     deletePhoto: protectedResolver(
-      async (_: any, { id }: deletePhotoParams, { loggedInUser }: Context) => {
+      async (_: any, { id }: deletePhotoArgs, { loggedInUser }: Context) => {
         const photo = await client.photo.findUnique({
           where: {
             id,

@@ -13,7 +13,7 @@ userId만 받아서 새로운 room모델을 생성하고, 그 room모델에 로�
 userId가 아닌 roomId만 받고, 새로운 message모델을 생성하고, 로그인한 유저와 기존에 존재하는 room모델을 연결시켜준다. 
 */
 
-interface sendMessageParams {
+interface sendMessageArgs {
   payload: string;
   roomId: number;
   userId: number;
@@ -24,7 +24,7 @@ export default {
     sendMessage: protectedResolver(
       async (
         _: any,
-        { payload, roomId, userId }: sendMessageParams,
+        { payload, roomId, userId }: sendMessageArgs,
         { loggedInUser }: Context
       ) => {
         let room = null;

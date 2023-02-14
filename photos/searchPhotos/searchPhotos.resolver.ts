@@ -1,13 +1,13 @@
 import client from "../../client";
 
-interface searchPhotosParams {
+interface searchPhotosArgs {
   keyword: string;
   page: number;
 }
 
 export default {
   Query: {
-    searchPhotos: (_: any, { keyword, page }: searchPhotosParams) =>
+    searchPhotos: (_: any, { keyword, page }: searchPhotosArgs) =>
       client.photo.findMany({
         where: {
           caption: {

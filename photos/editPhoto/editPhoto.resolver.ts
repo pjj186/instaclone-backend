@@ -3,7 +3,7 @@ import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 import { processHashtags } from "../photos.utils";
 
-interface editPhotoParams {
+interface editPhotoArgs {
   id: number;
   caption: string;
 }
@@ -13,7 +13,7 @@ export default {
     editPhoto: protectedResolver(
       async (
         _: any,
-        { id, caption }: editPhotoParams,
+        { id, caption }: editPhotoArgs,
         { loggedInUser }: Context
       ) => {
         const oldPhoto = await client.photo.findFirst({

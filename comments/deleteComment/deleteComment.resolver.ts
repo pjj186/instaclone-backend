@@ -2,18 +2,14 @@ import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 
-interface deleteCommentParams {
+interface deleteCommentArgss {
   id: number;
 }
 
 export default {
   Mutation: {
     deleteComment: protectedResolver(
-      async (
-        _: any,
-        { id }: deleteCommentParams,
-        { loggedInUser }: Context
-      ) => {
+      async (_: any, { id }: deleteCommentArgss, { loggedInUser }: Context) => {
         const comment = await client.comment.findUnique({
           where: {
             id,

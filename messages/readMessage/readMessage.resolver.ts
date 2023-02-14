@@ -2,14 +2,14 @@ import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 
-interface readMessageParams {
+interface readMessageArgs {
   id: number;
 }
 
 export default {
   Mutation: {
     readMessage: protectedResolver(
-      async (_: any, { id }: readMessageParams, { loggedInUser }: Context) => {
+      async (_: any, { id }: readMessageArgs, { loggedInUser }: Context) => {
         // 내가 그 대화방 안에 들어가있고 내가 그 메시지를 보낸 사용자가 아닐 때
         const message = await client.message.findFirst({
           where: {

@@ -2,7 +2,7 @@ import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 
-interface editCommentParams {
+interface editCommentArgs {
   id: number;
   payload: string;
 }
@@ -12,7 +12,7 @@ export default {
     editComment: protectedResolver(
       async (
         _: any,
-        { id, payload }: editCommentParams,
+        { id, payload }: editCommentArgs,
         { loggedInUser }: Context
       ) => {
         const comment = await client.comment.findUnique({

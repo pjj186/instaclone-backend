@@ -1,14 +1,14 @@
 import errorMessages from "../../error-messages";
 import { Context } from "../types";
 
-interface ISeeFollowingParams {
+interface ISeeFollowingArgs {
   username: string;
   lastId: number;
 }
 
 const resolverFn = async (
   _: any,
-  { username, lastId }: ISeeFollowingParams,
+  { username, lastId }: ISeeFollowingArgs,
   { client }: Context
 ) => {
   const ok = await client.user.findUnique({

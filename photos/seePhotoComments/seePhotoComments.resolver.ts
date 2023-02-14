@@ -1,6 +1,6 @@
 import client from "../../client";
 
-interface seePhotoCommentsParams {
+interface seePhotoCommentsArgs {
   id: number;
   lastId: number;
 }
@@ -9,7 +9,7 @@ interface seePhotoCommentsParams {
 
 export default {
   Query: {
-    seePhotoComments: (_: any, { id, lastId }: seePhotoCommentsParams) =>
+    seePhotoComments: (_: any, { id, lastId }: seePhotoCommentsArgs) =>
       client.comment.findMany({
         where: {
           photoId: id,

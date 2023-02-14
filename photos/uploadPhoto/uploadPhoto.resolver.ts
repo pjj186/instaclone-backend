@@ -5,7 +5,7 @@ import { FileUpload } from "../../users/users.types";
 import { protectedResolver } from "../../users/users.utils";
 import { processHashtags } from "../photos.utils";
 
-interface IPhotoParams {
+interface IPhotoArgs {
   file: FileUpload;
   caption: string;
 }
@@ -15,7 +15,7 @@ export default {
     uploadPhoto: protectedResolver(
       async (
         _: any,
-        { file, caption }: IPhotoParams,
+        { file, caption }: IPhotoArgs,
         { loggedInUser }: Context
       ) => {
         let hashtagObjs: any = [];

@@ -1,12 +1,12 @@
 import client from "../../client";
 
-interface seeHashtagParams {
+interface seeHashtagArgs {
   hashtag: string;
 }
 
 export default {
   Query: {
-    seeHashtag: (_: any, { hashtag }: seeHashtagParams) =>
+    seeHashtag: (_: any, { hashtag }: seeHashtagArgs) =>
       client.hashtag.findUnique({
         where: {
           hashtag,

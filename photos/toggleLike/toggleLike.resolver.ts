@@ -2,14 +2,14 @@ import client from "../../client";
 import { Context } from "../../users/types";
 import { protectedResolver } from "../../users/users.utils";
 
-interface likePhotoParams {
+interface likePhotoArgs {
   id: number;
 }
 
 export default {
   Mutation: {
     toggleLike: protectedResolver(
-      async (_: any, { id }: likePhotoParams, { loggedInUser }: Context) => {
+      async (_: any, { id }: likePhotoArgs, { loggedInUser }: Context) => {
         const photo = await client.photo.findUnique({
           where: {
             id,
