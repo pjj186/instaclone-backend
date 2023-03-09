@@ -1,5 +1,4 @@
-import fs from "fs";
-import { FileUpload, IUser } from "../users.types";
+import { IUser } from "../users.types";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
 import { Context } from "../types";
@@ -20,11 +19,7 @@ const resolverFn = async (
 ) => {
   let avatarUrl = null;
   if (avatar) {
-    avatarUrl = await uploadToS3(
-      <FileUpload>avatar,
-      loggedInUser?.id!,
-      "avatars"
-    );
+    avatarUrl = await uploadToS3(avatar, loggedInUser?.id!, "avatars");
     // const newFilename = `${loggedInUser?.id}-${Date.now()}-${filename}`;
     // const readStream = createReadStream();
     // const writeStream = fs.createWriteStream(

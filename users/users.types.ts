@@ -11,7 +11,7 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
   bio: string;
-  avatar: string;
+  avatar: FileUpload;
   following: User[];
   followers: User[];
   totalFollowing: number;

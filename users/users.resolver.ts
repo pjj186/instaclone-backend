@@ -1,6 +1,6 @@
 import client from "../client";
 import { Context } from "./types";
-import { IUser } from "./users.typeDefs";
+import { IUser } from "./users.types";
 
 export default {
   User: {
