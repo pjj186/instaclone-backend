@@ -1,23 +1,4 @@
-import { User } from "@prisma/client";
 import { gql } from "apollo-server-express";
-
-export interface IUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  bio: string;
-  avatar: string;
-  following: User[];
-  followers: User[];
-  totalFollowing: number;
-  totalFollowers: number;
-  isMe: boolean;
-  isFollowing: boolean;
-}
 
 export default gql`
   type User {

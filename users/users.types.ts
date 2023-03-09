@@ -10,12 +10,14 @@ export interface IUser {
   email: string;
   createdAt: string;
   updatedAt: string;
-  bio?: string;
-  avatar?: string | FileUpload;
+  bio: string;
+  avatar: string;
   following: User[];
   followers: User[];
   totalFollowing: number;
   totalFollowers: number;
+  isMe: boolean;
+  isFollowing: boolean;
 }
 
 interface ExtendedReadStream extends ReadStream {
