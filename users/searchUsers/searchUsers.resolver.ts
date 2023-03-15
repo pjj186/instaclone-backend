@@ -22,6 +22,7 @@ const resolverFn = async (
   });
   return users;
 };
+
 export default {
   Query: {
     searchUsers: resolverFn,

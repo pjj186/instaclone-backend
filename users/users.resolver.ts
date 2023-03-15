@@ -5,7 +5,7 @@ import { IUser } from "./users.types";
 export default {
   User: {
     // 내 id를 자신의 팔로우 리스트에 가지고 있는 사람들의 수
-    totalFollowing: ({ id }: IUser, _: any, { client }: Context) => {
+    totalFollowing: ({ id }: IUser, _: any) => {
       return client.user.count({
         where: {
           followers: {
@@ -17,7 +17,7 @@ export default {
       });
     },
     // 내 id를 팔로잉 하고 있는 사람들의 수
-    totalFollowers: ({ id }: IUser, _: any, { client }: Context) => {
+    totalFollowers: ({ id }: IUser, _: any) => {
       return client.user.count({
         where: {
           following: {
