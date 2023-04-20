@@ -1,6 +1,6 @@
-import { Hashtag, Photo } from "@prisma/client";
-import client from "../client";
-import { Context } from "../users/types";
+import { Hashtag, Photo } from '@prisma/client';
+import client from '../client';
+import { Context } from '../users/types';
 
 interface HashtagQueryPhotosArgs {
   page: number;
@@ -38,6 +38,26 @@ export default {
       } else {
         return userId === loggedInUser?.id;
       }
+    },
+    isLiked: async ({ id }: Photo, _: any, { loggedInUser }: Context) => {
+      if (!loggedInUser) {
+        return false;
+      }
+      const ok = await client.like.findUnique({
+        where: {
+          photoId_userId: {
+            photoId: id,
+            userId: loggedInUser.id,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+      if (ok) {
+        return true;
+      }
+      return false;
     },
   },
   Hashtag: {

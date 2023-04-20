@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 export default gql`
   type Photo {
@@ -12,7 +12,8 @@ export default gql`
     hashtags: [Hashtag] # need resolver
     createdAt: String!
     updatedAt: String!
-    isMine: Boolean!
+    isMine: Boolean! # need resolver
+    isLiked: Boolean! # need resolver
   }
 
   type Hashtag {
