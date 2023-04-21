@@ -9,7 +9,7 @@ export default gql`
     caption: String
     likes: Int! # need resolver
     commentNumber: Int! # need resolver
-    comments: [Comment]
+    comments: [Comment] # need resolver
     hashtags: [Hashtag] # need resolver
     createdAt: String!
     updatedAt: String!
