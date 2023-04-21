@@ -8,7 +8,8 @@ export default gql`
     file: String!
     caption: String
     likes: Int! # need resolver
-    comments: Int! # need resolver
+    commentNumber: Int! # need resolver
+    comments: [Comment]
     hashtags: [Hashtag] # need resolver
     createdAt: String!
     updatedAt: String!

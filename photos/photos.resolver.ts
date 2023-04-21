@@ -26,12 +26,14 @@ export default {
           photoId: id,
         },
       }),
-    comments: ({ id }: Photo) =>
+    commentNumber: ({ id }: Photo) =>
       client.comment.count({
         where: {
           photoId: id,
         },
       }),
+    comments: ({ id }: Photo) =>
+      client.photo.findUnique({ where: { id } }).comments(),
     isMine: ({ userId }: Photo, _: any, { loggedInUser }: Context) => {
       if (!loggedInUser) {
         return false;
