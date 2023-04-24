@@ -1,6 +1,6 @@
-import client from "../../client";
-import { Context } from "../../users/types";
-import { protectedResolver } from "../../users/users.utils";
+import client from '../../client';
+import { Context } from '../../users/types';
+import { protectedResolver } from '../../users/users.utils';
 
 interface createCommentParmas {
   photoId: number;
@@ -13,7 +13,7 @@ export default {
       async (
         _: any,
         { photoId, payload }: createCommentParmas,
-        { loggedInUser }: Context
+        { loggedInUser }: Context,
       ) => {
         const ok = await client.photo.findUnique({
           where: {
@@ -26,10 +26,10 @@ export default {
         if (!ok) {
           return {
             ok: false,
-            error: "photo not found",
+            error: 'photo not found',
           };
         }
-        await client.comment.create({
+        const newComment = await client.comment.create({
           data: {
             payload,
             photo: {
@@ -47,8 +47,9 @@ export default {
 
         return {
           ok: true,
+          id: newComment.id,
         };
-      }
+      },
     ),
   },
 };
