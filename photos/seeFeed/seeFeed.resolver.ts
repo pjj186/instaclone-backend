@@ -1,6 +1,6 @@
-import client from "../../client";
-import { Context } from "../../users/types";
-import { protectedResolver } from "../../users/users.utils";
+import client from '../../client';
+import { Context } from '../../users/types';
+import { protectedResolver } from '../../users/users.utils';
 
 export default {
   Query: {
@@ -24,9 +24,9 @@ export default {
             ],
           },
           orderBy: {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
-        })
+        }),
     ),
   },
 };
