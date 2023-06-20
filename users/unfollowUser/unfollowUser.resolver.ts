@@ -1,12 +1,12 @@
-import errorMessages from "../../error-messages";
-import { Context } from "../types";
-import { IUser } from "../users.types";
-import { protectedResolver } from "../users.utils";
+import errorMessages from '../../error-messages';
+import { Context } from '../types';
+import { IUser } from '../users.types';
+import { protectedResolver } from '../users.utils';
 
 const resolverFn = async (
   _: any,
   { username }: IUser,
-  { loggedInUser, client }: Context
+  { loggedInUser, client }: Context,
 ) => {
   const ok = await client.user.findUnique({
     where: {
@@ -16,6 +16,7 @@ const resolverFn = async (
       id: true,
     },
   });
+
   if (!ok) {
     return {
       ok: false,
